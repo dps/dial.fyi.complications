@@ -25,10 +25,10 @@ public class ClickThruActivity extends Activity {
         mNetworkImage = (NetworkImageView) findViewById(R.id.ctImage);
 
 
-        mTitleText.setText(getIntent().getStringExtra(ComplicationService.EXTRA_CT_TITLE));
-        mBodyText.setText(getIntent().getStringExtra(ComplicationService.EXTRA_CT_BODY));
+        mTitleText.setText(getIntent().getStringExtra(RssComplicationService.EXTRA_CT_TITLE));
+        mBodyText.setText(getIntent().getStringExtra(RssComplicationService.EXTRA_CT_BODY) + "\n\n ");
 
-        String url = getIntent().getStringExtra(ComplicationService.EXTRA_CT_IMAGE);
+        String url = getIntent().getStringExtra(RssComplicationService.EXTRA_CT_IMAGE);
         Log.d(TAG, "imageUrl:" + url);
         if (url != null) {
             mNetworkImage.setImageUrl(url, NetworkRequester.getInstance(this).getImageLoader());

@@ -5,7 +5,7 @@ public class Constants {
     static final String BASE_URL = "http://www.dial.fyi/";
     static final String USER_FRIENDLY_BASE_URL = "dial.fyi/";
 
-    static final String REGISTER_PATH = "register";
+    static final String REGISTER_PATH = "rssregister";
     static final String IMG_LIST_PATH = "imgs/%s";
     static final String USER_CONFIG_PATH = "ac/%s";
 

@@ -41,6 +41,73 @@
             </intent-filter>
         </service>
 
+        <!--
+        <service
+            android:name=".RssComplicationService"
+            android:icon="@drawable/ic_public_white_24dp"
+            android:label="@string/rss_provider_name">
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="LONG_TEXT" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="300" />
+            <meta-data
+                android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
+                android:value="io.singleton.wearcomplications.ACTION_RSS_CONFIG" />
+
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+        </service>
+        -->
+
+        <service
+            android:name=".NewNoteComplicationService"
+            android:icon="@drawable/ic_description_white_24dp"
+            android:label="@string/new_note_provider_name">
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON,SHORT_TEXT,LONG_TEXT" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0" />
+
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".NewestNoteComplicationService"
+            android:icon="@drawable/ic_description_white_24dp"
+            android:label="@string/newest_note_provider_name">
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="LONG_TEXT" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0" />
+
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+        </service>
+        <!-- <service
+            android:name=".SpecificNoteComplicationService"
+            android:icon="@drawable/ic_description_white_24dp"
+            android:label="@string/specific_note_provider_name">
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="LONG_TEXT" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0" />
+
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+        </service>  -->
+
         <uses-library
             android:name="com.google.android.wearable"
             android:required="false" />
@@ -48,23 +115,36 @@
         <activity
             android:name=".RssConfigActivity"
             android:exported="true"
-            android:label="@string/title_activity_config"
+            android:label="@string/title_activity_rss_config"
             android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
+                <action android:name="io.singleton.wearcomplications.ACTION_RSS_CONFIG" />
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CounterConfigActivity"
             android:exported="true"
-            android:label="@string/title_activity_config"
+            android:label="@string/title_counter_activity_config"
             android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
                 <action android:name="io.singleton.wearcomplications.ACTION_CONFIG" />
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NoteConfigActivity"
+            android:exported="true"
+            android:label="@string/title_activity_dial_notes"
+            android:theme="@android:style/Theme.DeviceDefault.Light">
+            <intent-filter>
+                <action android:name="io.singleton.wearcomplications.ACTION_NOTE_CONFIG" />
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -72,8 +152,11 @@
         </activity>
 
         <service
-            android:name=".CounterIntentService"
-            android:exported="false"></service>
+            android:name=".ComplicationsIntentService"
+            android:exported="false" />
+
+        <activity android:name=".NewNoteActivity"></activity>
+        <activity android:name=".ClickThruActivity"></activity>
     </application>
 
 </manifest>

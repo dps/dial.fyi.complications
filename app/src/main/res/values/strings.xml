@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dial.fyi</string>
+    <string name="app_name">dial.fyi complications</string>
     <string name="counter_provider_name">Counter</string>
     <string name="registering">Registering...</string>
     <string name="config_instructions">Visit \n%s\n to configure.</string>
@@ -11,4 +11,13 @@
     <string name="counter_name">Counter Name</string>
     <string name="delete_confirm">Delete?</string>
     <string name="counter">count</string>
+    <string name="rss_provider_name">RSS Feed</string>
+    <string name="title_activity_rss_config">RSS Config</string>
+    <string name="title_counter_activity_config">Counter Config</string>
+    <string name="title_activity_dial_notes">dial.fyi notes</string>
+    <string name="note_provider_name">Notes</string>
+    <string name="new_note_provider_name">Note: New</string>
+    <string name="newest_note_provider_name">Note: Latest</string>
+    <string name="specific_note_provider_name">Note: Choose...</string>
+    <string name="new_note">New Note</string>
 </resources>

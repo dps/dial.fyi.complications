@@ -36,12 +36,12 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ImageDownloadingStore {
+public class FeedDownloadingStore {
 
     private static final String TAG = "ACIDS";
-    public static final String ACTION_UPDATE_START = "io.singleton.watchface.UPDATE_START";
-    public static final String ACTION_IMAGE_DOWNLOADED = "io.singleton.watchface.IMAGE_DOWNLOADED";
-    public static final String ACTION_UPDATE_COMPLETE = "io.singleton.watchface.UPDATE_COMPLETE";
+    public static final String ACTION_UPDATE_START = "io.singleton.wearcomplications.UPDATE_START";
+    public static final String ACTION_IMAGE_DOWNLOADED = "io.singleton.wearcomplications.IMAGE_DOWNLOADED";
+    public static final String ACTION_UPDATE_COMPLETE = "io.singleton.wearcomplications.UPDATE_COMPLETE";
     public static final String THUMBNAILER_IMG_URL_PREFIX =
             "http://thumbor.us.davidsingleton.org/unsafe/400x400/";
     public static final String EXTRA_FILENAME_HASH = "hash";
@@ -59,11 +59,11 @@ public class ImageDownloadingStore {
     private Map<String, String> mUrlHashes = new HashMap<String, String>();
 
 
-    private static ImageDownloadingStore sInstance;
+    private static FeedDownloadingStore sInstance;
 
-    public static synchronized ImageDownloadingStore getInstance(Context context) {
+    public static synchronized FeedDownloadingStore getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new ImageDownloadingStore(context);
+            sInstance = new FeedDownloadingStore(context);
         }
         return sInstance;
     }
@@ -72,7 +72,7 @@ public class ImageDownloadingStore {
     private Settings mSettings;
     private LocalBroadcastManager mLocalBroadcastManager;
 
-    public ImageDownloadingStore(Context context) {
+    public FeedDownloadingStore(Context context) {
         mContext = context;
         mCacheDir = mContext.getCacheDir();
         mRequestQueue = Volley.newRequestQueue(context);

@@ -38,13 +38,13 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if (intent.getAction().equals(ImageDownloadingStore.ACTION_UPDATE_START)) {
+            if (intent.getAction().equals(FeedDownloadingStore.ACTION_UPDATE_START)) {
                 mDownloadsRemaining = 0;
             } else {
-                if (intent.getAction().equals(ImageDownloadingStore.ACTION_UPDATE_COMPLETE)) {
-                    mDownloadsRemaining += intent.getIntExtra(ImageDownloadingStore.EXTRA_NUM_NEW_IMAGES, 0);
+                if (intent.getAction().equals(FeedDownloadingStore.ACTION_UPDATE_COMPLETE)) {
+                    mDownloadsRemaining += intent.getIntExtra(FeedDownloadingStore.EXTRA_NUM_NEW_IMAGES, 0);
                 }
-                if (intent.getAction().equals(ImageDownloadingStore.ACTION_IMAGE_DOWNLOADED)) {
+                if (intent.getAction().equals(FeedDownloadingStore.ACTION_IMAGE_DOWNLOADED)) {
                     mDownloadsRemaining -= 1;
                 }
 
@@ -76,12 +76,12 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
             public void onClick(View v) {
 
                 IntentFilter filter = new IntentFilter();
-                filter.addAction(ImageDownloadingStore.ACTION_UPDATE_START);
-                filter.addAction(ImageDownloadingStore.ACTION_IMAGE_DOWNLOADED);
-                filter.addAction(ImageDownloadingStore.ACTION_UPDATE_COMPLETE);
+                filter.addAction(FeedDownloadingStore.ACTION_UPDATE_START);
+                filter.addAction(FeedDownloadingStore.ACTION_IMAGE_DOWNLOADED);
+                filter.addAction(FeedDownloadingStore.ACTION_UPDATE_COMPLETE);
                 mLocalBroadcastManager.registerReceiver(mReceiver, filter);
 
-                ImageDownloadingStore.getInstance(getApplicationContext()).updateUrls();
+                FeedDownloadingStore.getInstance(getApplicationContext()).updateUrls();
                 mProgressView.setVisibility(View.VISIBLE);
                 mProgressView.showWithAnimation();
                 findViewById(R.id.buttonProceed).setVisibility(View.GONE);
@@ -111,9 +111,7 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
         super.onResume();
         mSettings = Settings.getInstance(this);
         mSettings.addListener(this);
-        //updateUi();
-        setResult(RESULT_OK);
-        finish();
+        updateUi();
     }
 
     @Override
@@ -125,7 +123,7 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
     private void updateUi() {
         if (mSettings.getConfigToken() == null) {
             mTextView.setText(getString(R.string.registering));
-            ImageDownloadingStore.getInstance(this).register();
+            FeedDownloadingStore.getInstance(this).register();
         } else {
             String confUrl = Constants.USER_FRIENDLY_BASE_URL +
                     String.format(Constants.USER_CONFIG_PATH, mSettings.getConfigToken());
@@ -150,7 +148,7 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
     public void onExitAmbient() {
         updateDisplay();
         super.onExitAmbient();
-        ImageDownloadingStore.getInstance(this).updateUrls();
+        FeedDownloadingStore.getInstance(this).updateUrls();
     }
 
     private void updateDisplay() {

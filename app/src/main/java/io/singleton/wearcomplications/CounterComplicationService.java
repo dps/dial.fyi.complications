@@ -4,8 +4,6 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Icon;
 import android.support.wearable.complications.ComplicationData;
 import android.support.wearable.complications.ComplicationManager;
 import android.support.wearable.complications.ComplicationProviderService;
@@ -33,8 +31,8 @@ public class CounterComplicationService extends ComplicationProviderService {
             builder.setShortText(ComplicationText.plainText(
                     String.format("%d", counter)));
             builder.setShortTitle(ComplicationText.plainText(counterSettings.getShortTitle(complicationId)));
-            final Intent intent = new Intent(this, CounterIntentService.class);
-            intent.setAction(CounterIntentService.ACTION_INCR);
+            final Intent intent = new Intent(this, ComplicationsIntentService.class);
+            intent.setAction(ComplicationsIntentService.ACTION_INCR);
             intent.putExtra(ComplicationProviderService.EXTRA_CONFIG_COMPLICATION_ID, complicationId);
             final PendingIntent pi = PendingIntent.getService(this, complicationId, intent, 0);
             builder.setTapAction(pi);
