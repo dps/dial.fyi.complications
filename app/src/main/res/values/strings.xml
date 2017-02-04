@@ -7,4 +7,8 @@
     <string name="title_activity_click_thru">ClickThruActivity</string>
     <string name="new_counter_title">New Counter</string>
     <string name="counter_name_prefix">Counter #</string>
+    <string name="deleted">deleted</string>
+    <string name="counter_name">Counter Name</string>
+    <string name="delete_confirm">Delete?</string>
+    <string name="counter">count</string>
 </resources>

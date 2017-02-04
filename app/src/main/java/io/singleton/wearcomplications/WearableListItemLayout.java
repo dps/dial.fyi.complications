@@ -48,14 +48,14 @@ public class WearableListItemLayout extends LinearLayout
     public void onCenterPosition(boolean animate) {
         mName.setAlpha(1f);
         //((GradientDrawable) mCircle.getDrawable()).setColor(mChosenCircleColor);
-        ((VectorDrawable) mCircle.getDrawable()).setTint(mChosenCircleColor);
+        mCircle.getDrawable().setTint(mChosenCircleColor);
 
     }
 
     @Override
     public void onNonCenterPosition(boolean animate) {
         //((GradientDrawable) mCircle.getDrawable()).setColor(mFadedCircleColor);
-        ((VectorDrawable) mCircle.getDrawable()).setTint(mFadedCircleColor);
+        mCircle.getDrawable().setTint(mFadedCircleColor);
         mName.setAlpha(mFadedTextAlpha);
     }
 }

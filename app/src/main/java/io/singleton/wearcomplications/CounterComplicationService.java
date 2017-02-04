@@ -22,8 +22,16 @@ public class CounterComplicationService extends ComplicationProviderService {
 
         if (type == ComplicationData.TYPE_SHORT_TEXT) {
             ComplicationData.Builder builder = new ComplicationData.Builder(type);
+            int counter = counterSettings.getCounter(complicationId);
+            if (counter == -1) {
+                // Counter has been deleted
+                builder.setShortTitle(ComplicationText.plainText(getString(R.string.deleted)));
+                builder.setShortText(ComplicationText.plainText("-"));
+                manager.updateComplicationData(complicationId, builder.build());
+                return;
+            }
             builder.setShortText(ComplicationText.plainText(
-                    String.format("%d", counterSettings.getCounter(complicationId))));
+                    String.format("%d", counter)));
             builder.setShortTitle(ComplicationText.plainText(counterSettings.getShortTitle(complicationId)));
             final Intent intent = new Intent(this, CounterIntentService.class);
             intent.setAction(CounterIntentService.ACTION_INCR);

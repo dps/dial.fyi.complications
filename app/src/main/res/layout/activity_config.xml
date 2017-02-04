@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <android.support.wearable.view.ProgressSpinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_box="top|bottom"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/load_spinner"/>
-
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_height="match_parent"
