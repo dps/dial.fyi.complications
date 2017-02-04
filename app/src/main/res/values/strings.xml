@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">dial.fyi</string>
-    <string name="provider_name">Photo Gallery</string>
+    <string name="counter_provider_name">Counter</string>
     <string name="registering">Registering...</string>
     <string name="config_instructions">Visit \n%s\n to configure.</string>
     <string name="title_activity_config">Config</string>
+    <string name="title_activity_click_thru">ClickThruActivity</string>
+    <string name="new_counter_title">New Counter</string>
+    <string name="counter_name_prefix">Counter #</string>
 </resources>

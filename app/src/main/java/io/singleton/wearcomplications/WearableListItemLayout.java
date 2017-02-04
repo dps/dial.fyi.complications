@@ -2,6 +2,7 @@ package io.singleton.wearcomplications;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -46,12 +47,15 @@ public class WearableListItemLayout extends LinearLayout
     @Override
     public void onCenterPosition(boolean animate) {
         mName.setAlpha(1f);
-        ((GradientDrawable) mCircle.getDrawable()).setColor(mChosenCircleColor);
+        //((GradientDrawable) mCircle.getDrawable()).setColor(mChosenCircleColor);
+        ((VectorDrawable) mCircle.getDrawable()).setTint(mChosenCircleColor);
+
     }
 
     @Override
     public void onNonCenterPosition(boolean animate) {
-        ((GradientDrawable) mCircle.getDrawable()).setColor(mFadedCircleColor);
+        //((GradientDrawable) mCircle.getDrawable()).setColor(mFadedCircleColor);
+        ((VectorDrawable) mCircle.getDrawable()).setTint(mFadedCircleColor);
         mName.setAlpha(mFadedTextAlpha);
     }
 }

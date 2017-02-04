@@ -4,4 +4,5 @@
     <color name="wl_background">#230826</color>
     <color name="wl_element">#5b1566</color>
     <color name="text_color">#ffffff</color>
+    <color name="ct_background">#ffffffff</color>
 </resources>

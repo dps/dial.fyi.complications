@@ -52,119 +52,11 @@ public class NetworkRequester {
         return sInstance;
     }
 
-    void broadcastListingUpdateComplete() {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_LISTING_UPDATE_COMPLETE);
-        mLocalBroadcastManager.sendBroadcast(intent);
-    }
-
-    void broadcastListingUpdateError() {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_LISTING_UPDATE_ERROR);
-        mLocalBroadcastManager.sendBroadcast(intent);
-    }
-
-    //private final static String BASE_URL = "http://netcomps.us.davidsingleton.org/";
-    private final static String BASE_URL = "http://192.168.43.170:8080/";
 
     private void makeRequest(Request request) {
         mRequestQueue.add(request);
     }
 
-    public static void makeListingRequest(final Context ctx) {
-        Log.d(TAG, "makeListingRequest");
-        final NetworkRequester requester = getInstance(ctx);
-
-        JsonObjectRequest listingRequest = new JsonObjectRequest(Request.Method.GET,
-                BASE_URL + "list", new JSONObject(), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d(TAG, "makeListingRequest onResponse");
-
-                final SharedPreferences sharedPreferences = ctx.getSharedPreferences("list", 0);
-                Set<String> providerIds = new TreeSet<>();
-                SharedPreferences.Editor edit = sharedPreferences.edit();
-
-                try {
-                    JSONArray providers = response.getJSONArray("provider_list");
-
-                    for (int i = 0; i < providers.length(); i++) {
-                        JSONObject provider = providers.getJSONObject(i);
-                        String pid = provider.getString("id");
-                        Log.d(TAG, "provider: " + pid);
-
-                        providerIds.add(pid);
-                        edit.putString(pid + ":name", provider.getString("name"));
-                        edit.putString(pid + ":url", provider.getString("url"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                edit.putStringSet("providers", providerIds);
-                long now = System.currentTimeMillis();
-                edit.putLong("provider_list_updated", now);
-                edit.commit();
-
-                requester.broadcastListingUpdateComplete();
-
-            }},
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(TAG, "makeListingRequest onErrorResponse " + error);
-
-                    requester.broadcastListingUpdateError();
-                }
-            });
-        requester.makeRequest(listingRequest);
-    }
-
-    public static void makeUpdateRequest(final Context ctx,
-                                         final int complicationId, final int type, final ComplicationManager manager) {
-        NetworkRequester requester = getInstance(ctx);
-
-        final SharedPreferences sharedPreferences = ctx.getSharedPreferences("config", 0);
-        final String name = sharedPreferences.getString(complicationId + "_selected_provider_name", "demo");
-        final String id = sharedPreferences.getString(complicationId + "_selected_provider_id", "demo");
-        final String url = sharedPreferences.getString(complicationId + "_selected_provider_url", "demourl");
-
-        final Intent intent = new Intent(ctx, ConfigActivity.class);
-        intent.putExtra(ComplicationProviderService.EXTRA_CONFIG_COMPLICATION_ID, complicationId);
-        final PendingIntent pi = PendingIntent.getActivity(ctx, complicationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        final String cachedData = sharedPreferences.getString(id + "_data", "");
-        final long cachedAgeMillis = System.currentTimeMillis() - sharedPreferences.getLong(id + "_when", 0);
-        if (cachedAgeMillis < ONE_HOUR_MILLIS) {
-            ComplicationService.updateComplication(cachedData, id, complicationId, type, manager, pi, ctx);
-            return;
-        }
-        // Show '-' while fetching...
-        ComplicationService.updateComplication(null, id, complicationId, type, manager, pi, ctx);
-
-        StringRequest request = new StringRequest(Request.Method.GET, url + "update", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "Network Response: " + response);
-                sharedPreferences.edit()
-                        .putString(id + "_data", response)
-                        .putLong(id + "_when", System.currentTimeMillis())
-                        .apply();
-                ComplicationService.updateComplication(response, id, complicationId, type, manager, pi, ctx);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error Response " + error);
-
-                String data = cachedAgeMillis < ONE_DAY_MILLIS ? cachedData : null;
-
-                ComplicationService.updateComplication(data, id, complicationId, type, manager, pi, ctx);
-            }
-        });
-        requester.makeRequest(request);
-
-    }
 
     public ImageLoader getImageLoader() {
         return new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {

@@ -1,14 +1,14 @@
-<io.singleton.netcomps.WearableListItemLayout
+<io.singleton.wearcomplications.WearableListItemLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="80dp">
     <ImageView
         android:id="@+id/circle"
-        android:layout_height="20dp"
+        android:layout_height="24dp"
         android:layout_margin="16dp"
-        android:layout_width="20dp"
-        android:src="@drawable/wl_circle"/>
+        android:layout_width="24dp"
+        android:src="@drawable/ic_replay_white_24dp"/>
     <TextView
         android:id="@+id/name"
         android:gravity="center_vertical|left"
@@ -19,4 +19,5 @@
         android:lineSpacingExtra="-4sp"
         android:textColor="@color/text_color"
         android:textSize="16sp"/>
-</io.singleton.netcomps.WearableListItemLayout>
+
+</io.singleton.wearcomplications.WearableListItemLayout>

@@ -1,7 +1,7 @@
 package io.singleton.wearcomplications;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -31,7 +31,7 @@ public class ClickThruActivity extends Activity {
         String url = getIntent().getStringExtra(ComplicationService.EXTRA_CT_IMAGE);
         Log.d(TAG, "imageUrl:" + url);
         if (url != null) {
-            mNetworkImage.setImageUrl(url, FxNetworkRequester.getInstance(this).getImageLoader());
+            mNetworkImage.setImageUrl(url, NetworkRequester.getInstance(this).getImageLoader());
         }
 
     }

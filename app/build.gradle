@@ -17,7 +17,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "io.singleton.wearface"
+        applicationId "io.singleton.wearcomplications"
         minSdkVersion 23
         targetSdkVersion 23
         versionCode computeVersionCode()
