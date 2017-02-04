@@ -1,4 +1,4 @@
-package io.singleton.wearface;
+package io.singleton.wearcomplications;
 
 public class Constants {
 

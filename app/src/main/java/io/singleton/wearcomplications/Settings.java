@@ -1,8 +1,7 @@
-package io.singleton.wearface;
+package io.singleton.wearcomplications;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

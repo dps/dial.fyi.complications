@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.wearable.view.BoxInsetLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ct_background"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_box="left|right"
+        >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <com.android.volley.toolbox.NetworkImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/ctImage"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/titleText"
+                    android:textAppearance="@style/TextAppearance.Wearable.Large"
+                    android:textAlignment="center"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bodyText"
+                    android:textAppearance="@style/TextAppearance.Wearable.Medium"
+                    />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+    </FrameLayout>
+</android.support.wearable.view.BoxInsetLayout>
+

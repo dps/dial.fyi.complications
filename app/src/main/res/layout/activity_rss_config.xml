@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.singleton.wearcomplications.ConfigActivity"
+    tools:context="io.singleton.wearcomplications.RssConfigActivity"
     tools:deviceIds="wear"
     android:background="@color/wl_background"
     >

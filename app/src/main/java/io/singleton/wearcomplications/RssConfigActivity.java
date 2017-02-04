@@ -1,4 +1,4 @@
-package io.singleton.wearface;
+package io.singleton.wearcomplications;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class ConfigActivity extends WearableActivity implements Settings.Listener {
+public class RssConfigActivity extends WearableActivity implements Settings.Listener {
 
     private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
             new SimpleDateFormat("HH:mm", Locale.US);
@@ -111,7 +111,9 @@ public class ConfigActivity extends WearableActivity implements Settings.Listene
         super.onResume();
         mSettings = Settings.getInstance(this);
         mSettings.addListener(this);
-        updateUi();
+        //updateUi();
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override

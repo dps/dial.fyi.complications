@@ -1,4 +1,4 @@
-package io.singleton.wearface;
+package io.singleton.wearcomplications;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
@@ -6,7 +6,7 @@ import android.support.wearable.complications.ComplicationData;
 import android.support.wearable.complications.ComplicationManager;
 import android.support.wearable.complications.ComplicationProviderService;
 
-public class ComplicationService extends ComplicationProviderService {
+public class CounterComplicationService extends ComplicationProviderService {
 
     @Override
     public void onComplicationUpdate(int complicationId, int type,
