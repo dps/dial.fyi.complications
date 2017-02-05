@@ -122,6 +122,8 @@ public class FeedDownloadingStore {
     }
 
     public void onFeedUpdated() {
+        mSettings.setLastUpdateTimeToNow();
+        RssComplicationService.requestUpdateAll(mContext);
         broadcastUpdateComplete();
     }
 
@@ -237,7 +239,8 @@ public class FeedDownloadingStore {
         }
 
         current = (current + 1) % len;
-        prefs.edit().putInt("currentEntry", current).apply();
+        prefs.edit().putInt("currentEntry", current).commit();
+        Log.d(TAG, "currentEntry " + current);
         Entry result = new Entry();
         result.title = prefs.getString("entry-" + current + "-title", "");
         result.link = prefs.getString("entry-" + current + "-link", "");

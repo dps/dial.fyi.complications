@@ -133,4 +133,9 @@ public class Settings implements SharedPreferences.OnSharedPreferenceChangeListe
         return mLastUpdateMillis;
     }
 
+    public void setLastUpdateTimeToNow() {
+        mLastUpdateMillis = System.currentTimeMillis();
+        writeToSharedPreferences();
+    }
+
 }

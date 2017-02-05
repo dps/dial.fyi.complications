@@ -29,20 +29,12 @@ import java.util.TreeSet;
 
 public class NetworkRequester {
 
-    private static final String TAG = "FXNR";
-    private static final long ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
-    private static final long ONE_HOUR_MILLIS = 60 * 60 * 1000;
-    public static final String ACTION_LISTING_UPDATE_COMPLETE = "listing_update_complete";
-    public static final String ACTION_LISTING_UPDATE_ERROR = "listing_update_error";
-
     private static NetworkRequester sInstance;
 
     private final RequestQueue mRequestQueue;
-    private final LocalBroadcastManager mLocalBroadcastManager;
 
     public NetworkRequester(Context ctx) {
         mRequestQueue = Volley.newRequestQueue(ctx);
-        mLocalBroadcastManager = LocalBroadcastManager.getInstance(ctx);
     }
 
     public static synchronized NetworkRequester getInstance(Context ctx) {

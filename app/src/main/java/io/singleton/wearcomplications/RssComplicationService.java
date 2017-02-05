@@ -1,6 +1,8 @@
 package io.singleton.wearcomplications;
 
 import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
@@ -8,6 +10,7 @@ import android.support.wearable.complications.ComplicationData;
 import android.support.wearable.complications.ComplicationManager;
 import android.support.wearable.complications.ComplicationProviderService;
 import android.support.wearable.complications.ComplicationText;
+import android.support.wearable.complications.ProviderUpdateRequester;
 
 import static android.app.PendingIntent.FLAG_ONE_SHOT;
 
@@ -42,5 +45,14 @@ public class RssComplicationService extends ComplicationProviderService {
         }
 
         FeedDownloadingStore.getInstance(this).updateFeedIfStale();
+    }
+
+    static void requestUpdateAll(Context ctx) {
+        ProviderUpdateRequester requester = new ProviderUpdateRequester(
+                ctx, ComponentName.createRelative(
+                "io.singleton.wearcomplications",
+                ".RssComplicationService"));
+
+        requester.requestUpdateAll();
     }
 }
