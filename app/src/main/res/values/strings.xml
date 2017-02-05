@@ -2,7 +2,7 @@
     <string name="app_name">dial.fyi complications</string>
     <string name="counter_provider_name">Counter</string>
     <string name="registering">Registering...</string>
-    <string name="config_instructions">Visit \n%s\n to configure.</string>
+    <string name="config_instructions">%1$s\n%2$s\n to configure.</string>
     <string name="title_activity_config">Config</string>
     <string name="title_activity_click_thru">ClickThruActivity</string>
     <string name="new_counter_title">New Counter</string>

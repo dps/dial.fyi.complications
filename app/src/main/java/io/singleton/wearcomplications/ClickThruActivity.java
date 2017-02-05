@@ -36,4 +36,9 @@ public class ClickThruActivity extends Activity {
 
     }
 
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
 }

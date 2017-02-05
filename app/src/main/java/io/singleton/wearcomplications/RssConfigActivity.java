@@ -22,7 +22,7 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
 
     private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
             new SimpleDateFormat("HH:mm", Locale.US);
-    public static final int IMAGE_DOWNLOAD_TIMEOUT_MS = 10000;
+    public static final int FEED_FETCH_TIMEOUT_MS = 10000;
 
     private BoxInsetLayout mContainerView;
     private TextView mTextView;
@@ -33,28 +33,17 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
 
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
-        private int mDownloadsRemaining = 0;
-
         @Override
         public void onReceive(Context context, Intent intent) {
 
             if (intent.getAction().equals(FeedDownloadingStore.ACTION_UPDATE_START)) {
-                mDownloadsRemaining = 0;
-            } else {
-                if (intent.getAction().equals(FeedDownloadingStore.ACTION_UPDATE_COMPLETE)) {
-                    mDownloadsRemaining += intent.getIntExtra(FeedDownloadingStore.EXTRA_NUM_NEW_IMAGES, 0);
+                // Great
+            } else if (intent.getAction().equals(FeedDownloadingStore.ACTION_UPDATE_COMPLETE)) {
+                if (mReceiver != null) {
+                    mLocalBroadcastManager.unregisterReceiver(mReceiver);
+                    mReceiver = null;
                 }
-                if (intent.getAction().equals(FeedDownloadingStore.ACTION_IMAGE_DOWNLOADED)) {
-                    mDownloadsRemaining -= 1;
-                }
-
-                if (mDownloadsRemaining == 0) {
-                    if (mReceiver != null) {
-                        mLocalBroadcastManager.unregisterReceiver(mReceiver);
-                        mReceiver = null;
-                    }
-                    finish();
-                }
+                finish();
             }
         }
     };
@@ -77,17 +66,16 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
 
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(FeedDownloadingStore.ACTION_UPDATE_START);
-                filter.addAction(FeedDownloadingStore.ACTION_IMAGE_DOWNLOADED);
                 filter.addAction(FeedDownloadingStore.ACTION_UPDATE_COMPLETE);
                 mLocalBroadcastManager.registerReceiver(mReceiver, filter);
 
-                FeedDownloadingStore.getInstance(getApplicationContext()).updateUrls();
+                FeedDownloadingStore.getInstance(getApplicationContext()).updateFeed();
                 mProgressView.setVisibility(View.VISIBLE);
                 mProgressView.showWithAnimation();
                 findViewById(R.id.buttonProceed).setVisibility(View.GONE);
 
                 setResult(RESULT_OK);
-                timeoutToFinish(IMAGE_DOWNLOAD_TIMEOUT_MS);
+                timeoutToFinish(FEED_FETCH_TIMEOUT_MS);
             }
         });
     }
@@ -127,7 +115,8 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
         } else {
             String confUrl = Constants.USER_FRIENDLY_BASE_URL +
                     String.format(Constants.USER_CONFIG_PATH, mSettings.getConfigToken());
-            mTextView.setText(getString(R.string.config_instructions, confUrl));
+            String title = getSharedPreferences("feed", 0).getString("feedTitle", "None");
+            mTextView.setText(getString(R.string.config_instructions, title, confUrl));
         }
     }
 
@@ -148,7 +137,7 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
     public void onExitAmbient() {
         updateDisplay();
         super.onExitAmbient();
-        FeedDownloadingStore.getInstance(this).updateUrls();
+        FeedDownloadingStore.getInstance(this).updateFeed();
     }
 
     private void updateDisplay() {

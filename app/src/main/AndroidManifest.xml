@@ -41,7 +41,6 @@
             </intent-filter>
         </service>
 
-        <!--
         <service
             android:name=".RssComplicationService"
             android:icon="@drawable/ic_public_white_24dp"
@@ -60,7 +59,6 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
         </service>
-        -->
 
         <service
             android:name=".NewNoteComplicationService"
@@ -120,6 +118,7 @@
             <intent-filter>
                 <action android:name="io.singleton.wearcomplications.ACTION_RSS_CONFIG" />
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
 
                 <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
             </intent-filter>
