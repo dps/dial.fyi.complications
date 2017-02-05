@@ -34,7 +34,7 @@
                 android:value="0" />
             <meta-data
                 android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
-                android:value="io.singleton.wearcomplications.ACTION_CONFIG" />
+                android:value="io.singleton.wearcomplications.ACTION_COUNTER_CONFIG" />
 
             <intent-filter>
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
@@ -130,9 +130,9 @@
             android:label="@string/title_counter_activity_config"
             android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
-                <action android:name="io.singleton.wearcomplications.ACTION_CONFIG" />
+                <action android:name="io.singleton.wearcomplications.ACTION_COUNTER_CONFIG" />
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
             </intent-filter>
         </activity>

@@ -64,7 +64,7 @@ public class NoteConfigActivity extends WearableActivity {
     private void showListFromSharedPrefs() {
 
         Map<String, ?> notes = mSharedPrefs.getAll();
-        if (notes != null) {
+        if (notes != null  && notes.size() > 0) {
             mElements = new String[notes.size()];  // We will always skip latest-...
             mIds = new String[notes.size()];
             mValues = new Integer[notes.size()];
