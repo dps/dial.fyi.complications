@@ -28,7 +28,7 @@ public class RssComplicationService extends ComplicationProviderService {
 
             ComplicationData.Builder builder = new ComplicationData.Builder(type);
             FeedDownloadingStore.Entry entry = FeedDownloadingStore.getNextEntry(this);
-            String data = entry.title;
+            String data = entry != null ? entry.title : null;
             if (data == null) {
                 data = "-";
             } else {
