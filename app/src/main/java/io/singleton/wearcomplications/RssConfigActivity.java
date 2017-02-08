@@ -4,14 +4,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
 import android.support.wearable.view.ProgressSpinner;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.wearable.intent.RemoteIntent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -117,7 +122,16 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
                     String.format(Constants.USER_CONFIG_PATH, mSettings.getConfigToken());
             String title = getSharedPreferences("feed", 0).getString("feedTitle", "None");
             mTextView.setText(getString(R.string.config_instructions, title, confUrl));
+
+            openConfUrlOnPhone("http://" + confUrl);
         }
+    }
+
+    private void openConfUrlOnPhone(String confUrl) {
+        Intent intent = new Intent(Intent.ACTION_VIEW)
+                .addCategory(Intent.CATEGORY_BROWSABLE)
+                .setData(Uri.parse(confUrl));
+        RemoteIntent.startRemoteActivity(this, intent, null);
     }
 
 
