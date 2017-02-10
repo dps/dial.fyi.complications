@@ -93,7 +93,7 @@ public class EmojagotchiComplicationService extends ComplicationProviderService
             builder.setMaxValue(10000);
             builder.setValue(mStepsTotal);
         } else if (mComplicationType == ComplicationData.TYPE_SHORT_TEXT) {
-            builder.setShortTitle(ComplicationText.plainText("" + mStepsTotal));
+            //builder.setShortTitle(ComplicationText.plainText("" + mStepsTotal));
             builder.setShortText(ComplicationText.plainText(emoji));
         }
         Intent intent = new Intent(this, EmojagotchiConfigActivity.class);
