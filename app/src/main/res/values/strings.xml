@@ -20,4 +20,13 @@
     <string name="newest_note_provider_name">Note: Latest</string>
     <string name="specific_note_provider_name">Note: Choose...</string>
     <string name="new_note">New Note</string>
+    <string name="title_activity_emojagotchi_config">EmojagotchiConfigActivity</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="done_button_label">Done</string>
+    <string name="emoji_smiling">\ud83d\ude01</string>
+    <string name="play_services_upgrade">Play Services is out of date, please update your Android Wear app</string>
+    <string name="generic_error">Something went wrong: %s</string>
+    <string name="error">Error</string>
+    <string name="explainer">Make me happy by staying on track for 10000 steps a day</string>
+    <string name="emojagotchi">Emojagotchi</string>
 </resources>

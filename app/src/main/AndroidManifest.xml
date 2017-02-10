@@ -40,7 +40,6 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
         </service>
-
         <service
             android:name=".RssComplicationService"
             android:icon="@drawable/ic_public_white_24dp"
@@ -59,7 +58,6 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
         </service>
-
         <service
             android:name=".NewNoteComplicationService"
             android:icon="@drawable/ic_description_white_24dp"
@@ -90,7 +88,26 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
         </service>
-        <!-- <service
+        <service
+            android:name=".EmojagotchiComplicationService"
+            android:icon="@drawable/ic_insert_emoticon_white_24dp"
+            android:label="@string/emojagotchi">
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="RANGED_VALUE,ICON,LARGE_IMAGE" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="600" />
+            <meta-data
+                android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
+                android:value="io.singleton.wearcomplications.ACTION_EMOJA_CONFIG" />
+
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+        </service>
+        <!--
+        <service
             android:name=".SpecificNoteComplicationService"
             android:icon="@drawable/ic_description_white_24dp"
             android:label="@string/specific_note_provider_name">
@@ -104,7 +121,8 @@
             <intent-filter>
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
-        </service>  -->
+        </service>
+        -->
 
         <uses-library
             android:name="com.google.android.wearable"
@@ -118,8 +136,21 @@
             <intent-filter>
                 <action android:name="io.singleton.wearcomplications.ACTION_RSS_CONFIG" />
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EmojagotchiConfigActivity"
+            android:exported="true"
+            android:label="@string/title_activity_rss_config"
+            android:theme="@android:style/Theme.DeviceDefault.Light">
+            <intent-filter>
+                <action android:name="io.singleton.wearcomplications.ACTION_EMOJA_CONFIG" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
             </intent-filter>
         </activity>
@@ -131,6 +162,7 @@
             <intent-filter>
                 <action android:name="io.singleton.wearcomplications.ACTION_COUNTER_CONFIG" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
             </intent-filter>
@@ -154,8 +186,9 @@
             android:name=".ComplicationsIntentService"
             android:exported="false" />
 
-        <activity android:name=".NewNoteActivity"></activity>
-        <activity android:name=".ClickThruActivity"></activity>
+        <activity android:name=".NewNoteActivity" />
+        <activity android:name=".ClickThruActivity" />
+
     </application>
 
 </manifest>
