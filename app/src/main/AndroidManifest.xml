@@ -94,7 +94,7 @@
             android:label="@string/emojagotchi">
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT,RANGED_VALUE,ICON,LARGE_IMAGE" />
+                android:value="SHORT_TEXT,RANGED_VALUE,LARGE_IMAGE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="600" />

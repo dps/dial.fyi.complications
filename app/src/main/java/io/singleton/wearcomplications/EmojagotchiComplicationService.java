@@ -81,19 +81,15 @@ public class EmojagotchiComplicationService extends ComplicationProviderService
         ComplicationData.Builder builder = new ComplicationData.Builder(mComplicationType);
 
         if (mComplicationType == ComplicationData.TYPE_LARGE_IMAGE) {
-            Bitmap bitmap = textAsBitmap(emoji, 256, Color.BLACK);
+            Bitmap bitmap = textAsBitmap(" " + emoji + " ", 256, Color.BLACK);
             Icon icon = Icon.createWithBitmap(bitmap);
             builder.setLargeImage(icon);
-        } else if (mComplicationType == ComplicationData.TYPE_ICON) {
-            Bitmap test = textAsBitmap(emoji, 64, Color.BLACK);
-            builder.setIcon(Icon.createWithBitmap(test));
         } else if (mComplicationType == ComplicationData.TYPE_RANGED_VALUE) {
             builder.setShortTitle(ComplicationText.plainText(emoji));
             builder.setMinValue(0);
             builder.setMaxValue(10000);
             builder.setValue(mStepsTotal);
         } else if (mComplicationType == ComplicationData.TYPE_SHORT_TEXT) {
-            //builder.setShortTitle(ComplicationText.plainText("" + mStepsTotal));
             builder.setShortText(ComplicationText.plainText(emoji));
         }
         Intent intent = new Intent(this, EmojagotchiConfigActivity.class);
@@ -135,10 +131,10 @@ public class EmojagotchiComplicationService extends ComplicationProviderService
         paint.setTextAlign(Paint.Align.LEFT);
         float baseline = -paint.ascent(); // ascent() is negative
         int width = (int) (paint.measureText(text) + 0.5f); // round
-        int height = (int) (baseline + paint.descent() + 0.5f);
+        int height = width;//(int) (baseline + paint.descent() + 0.5f);
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
-        canvas.drawText(text, 0, baseline, paint);
+        canvas.drawText(text, 0, (height / 2) + (baseline / 3), paint);
         return image;
     }
 
