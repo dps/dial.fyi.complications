@@ -52,7 +52,7 @@
                 android:value="300" />
             <meta-data
                 android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
-                android:value="io.singleton.wearcomplications.ACTION_RSS_CONFIG" />
+                android:value="io.singleton.wearcomplications.ACTION_SERVER_CONFIG" />
 
             <intent-filter>
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
@@ -106,6 +106,24 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
             </intent-filter>
         </service>
+        <service
+            android:name=".CurlComplicationService"
+            android:icon="@drawable/ic_power_white_24dp"
+            android:label="@string/curl">
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="ICON" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0" />
+            <meta-data
+                android:name="android.support.wearable.complications.PROVIDER_CONFIG_ACTION"
+                android:value="io.singleton.wearcomplications.ACTION_CURL_CONFIG" />
+
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+        </service>
         <!--
         <service
             android:name=".SpecificNoteComplicationService"
@@ -129,12 +147,25 @@
             android:required="false" />
 
         <activity
-            android:name=".RssConfigActivity"
+            android:name=".ServerConfigActivity"
             android:exported="true"
             android:label="@string/title_activity_rss_config"
             android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
-                <action android:name="io.singleton.wearcomplications.ACTION_RSS_CONFIG" />
+                <action android:name="io.singleton.wearcomplications.ACTION_SERVER_CONFIG" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.support.wearable.complications.category.PROVIDER_CONFIG" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CurlConfigActivity"
+            android:exported="true"
+            android:label="@string/title_activity_rss_config"
+            android:theme="@android:style/Theme.DeviceDefault.Light">
+            <intent-filter>
+                <action android:name="io.singleton.wearcomplications.ACTION_CURL_CONFIG" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />

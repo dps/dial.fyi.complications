@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -28,6 +29,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.R.attr.type;
 
 
 public class FeedDownloadingStore {
@@ -127,6 +130,11 @@ public class FeedDownloadingStore {
         broadcastUpdateComplete();
     }
 
+    public void onCurlUpdated() {
+        CurlComplicationService.requestUpdateAll(mContext);
+        broadcastUpdateComplete();
+    }
+
     private void broadcastUpdateComplete() {
         Intent broadcast = new Intent();
         broadcast.setAction(ACTION_UPDATE_COMPLETE);
@@ -190,6 +198,56 @@ public class FeedDownloadingStore {
         mRequestQueue.add(request);
     }
 
+    public void updateCurlSettings() {
+        String when = Long.toString(System.currentTimeMillis());
+        JSONObject body = new JSONObject();
+        try {
+            body.put("id", mSettings.getLocalId());
+            body.put("token", mSettings.getConfigToken());
+            body.put("when", when);
+        } catch (JSONException e) {
+            Log.e(TAG, "Error serializing request ", e);
+        }
+
+        JSONObject json = body;
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Constants.getCurlUrl(mSettings.getConfigToken()),
+                json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // TODO parse response
+                        Log.d(TAG, response.toString());
+                        processCurlResponse(response);
+                    }
+                },
+                mErrorListener
+        );
+        request.setRetryPolicy(mRetryPolicy);
+        mRequestQueue.add(request);
+    }
+
+    private void processCurlResponse(JSONObject response) {
+        SharedPreferences prefs = mContext.getSharedPreferences("feed", 0);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        try {
+            String iconName = response.getString("icon");
+            String curlUrl = response.getString("url");
+            String method = response.getString("method");
+
+            editor.putString("curl-icon", iconName)
+                    .putString("curl-url", curlUrl)
+                    .putString("curl-method", method).commit();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        onCurlUpdated();
+    }
+
     private void processFeedResponse(JSONObject response) {
         SharedPreferences prefs = mContext.getSharedPreferences("feed", 0);
         SharedPreferences.Editor editor = prefs.edit();
@@ -221,6 +279,38 @@ public class FeedDownloadingStore {
         }
         editor.commit();
         onFeedUpdated();
+    }
+
+    public void makeGenericCurlRequest(int complicationId) {
+
+        SharedPreferences prefs = mContext.getSharedPreferences("feed", 0);
+        String url = prefs.getString("curl-url", null);
+        String method = prefs.getString("curl-method", null);
+        if (url == null || method == null) {
+            return;
+        }
+
+
+        int requestMethod = Request.Method.POST;
+        if (method.equals("GET")) {
+            requestMethod = Request.Method.GET;
+        }
+
+        StringRequest request = new StringRequest(requestMethod, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                CurlComplicationService.onHttpRequestCompleted(response, mContext);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error Response " + error);
+                CurlComplicationService.onHttpRequestError(error, mContext);
+            }
+        });
+
+        request.setRetryPolicy(mRetryPolicy);
+        mRequestQueue.add(request);
     }
 
     static class Entry {

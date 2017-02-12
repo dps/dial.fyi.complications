@@ -22,8 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import static io.singleton.wearcomplications.CurlConfigActivity.EXTRA_WC_COMPLICATION_TYPE;
 
-public class RssConfigActivity extends WearableActivity implements Settings.Listener {
+
+public class ServerConfigActivity extends WearableActivity implements Settings.Listener {
 
     private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
             new SimpleDateFormat("HH:mm", Locale.US);
@@ -35,6 +37,10 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
     private ProgressSpinner mProgressView;
     private Settings mSettings;
     private LocalBroadcastManager mLocalBroadcastManager;
+    private int mComplicationId;
+    private int mComplicationType;
+    private String mMode;
+
 
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
@@ -74,7 +80,11 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
                 filter.addAction(FeedDownloadingStore.ACTION_UPDATE_COMPLETE);
                 mLocalBroadcastManager.registerReceiver(mReceiver, filter);
 
-                FeedDownloadingStore.getInstance(getApplicationContext()).updateFeed();
+                if (mMode.equals("rss")) {
+                    FeedDownloadingStore.getInstance(getApplicationContext()).updateFeed();
+                } else {
+                    FeedDownloadingStore.getInstance(getApplicationContext()).updateCurlSettings();
+                }
                 mProgressView.setVisibility(View.VISIBLE);
                 mProgressView.showWithAnimation();
                 findViewById(R.id.buttonProceed).setVisibility(View.GONE);
@@ -102,6 +112,16 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
     @Override
     public void onResume() {
         super.onResume();
+        mComplicationId = getIntent().getIntExtra(
+                android.support.wearable.complications.ComplicationProviderService.EXTRA_CONFIG_COMPLICATION_ID, -1);
+        mComplicationType = getIntent().getIntExtra(
+                android.support.wearable.complications.ComplicationProviderService.EXTRA_CONFIG_COMPLICATION_TYPE, -1);
+
+        mMode = getIntent().getStringExtra(EXTRA_WC_COMPLICATION_TYPE);
+        if (mMode == null) {
+            mMode = "rss";
+        }
+
         mSettings = Settings.getInstance(this);
         mSettings.addListener(this);
         updateUi();
@@ -119,8 +139,10 @@ public class RssConfigActivity extends WearableActivity implements Settings.List
             FeedDownloadingStore.getInstance(this).register();
         } else {
             String confUrl = Constants.USER_FRIENDLY_BASE_URL +
-                    String.format(Constants.USER_CONFIG_PATH, mSettings.getConfigToken());
-            String title = getSharedPreferences("feed", 0).getString("feedTitle", "None");
+                    String.format(Constants.USER_CONFIG_PATH, mMode, mSettings.getConfigToken());
+            String title = mMode.equals("rss") ?
+                    getSharedPreferences("feed", 0).getString("feedTitle", "None") :
+                    "curl";
             mTextView.setText(getString(R.string.config_instructions, title, confUrl));
 
             openConfUrlOnPhone("http://" + confUrl);

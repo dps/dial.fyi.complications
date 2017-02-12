@@ -13,6 +13,8 @@ import static android.support.wearable.input.RemoteInputIntent.EXTRA_REMOTE_INPU
 public class ComplicationsIntentService extends IntentService {
     static final String ACTION_INCR = "io.singleton.wearcomplications.action.INCR";
     static final String ACTION_NEW_NOTE = "io.singleton.wearcomplications.action.NEW_NOTE";
+    static final String ACTION_CURL = "io.singleton.wearcomplications.action.CURL";
+
 
     public ComplicationsIntentService() {
         super("ComplicationsIntentService");
@@ -27,8 +29,20 @@ public class ComplicationsIntentService extends IntentService {
                 incrementCounter(intent);
             } else if (ACTION_NEW_NOTE.equals(action)) {
                 newNote(intent);
+            } else if (ACTION_CURL.equals(action)) {
+                curl(intent);
             }
         }
+    }
+
+    private void curl(Intent intent) {
+        getSharedPreferences("feed", 0).edit()
+                .putString("curl-inflight", "inflight")
+                .remove("curl-error").commit();
+
+        int complicationId = intent.getIntExtra(ComplicationProviderService.EXTRA_CONFIG_COMPLICATION_ID, -1);
+        FeedDownloadingStore.getInstance(this).makeGenericCurlRequest(complicationId);
+        CurlComplicationService.requestUpdateAll(this);
     }
 
     private void newNote(Intent intent) {

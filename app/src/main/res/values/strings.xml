@@ -29,4 +29,5 @@
     <string name="error">Error</string>
     <string name="explainer">Make me happy by staying on track for 10000 steps a day</string>
     <string name="emojagotchi">Emojagotchi</string>
+    <string name="curl">curl (power users)</string>
 </resources>
