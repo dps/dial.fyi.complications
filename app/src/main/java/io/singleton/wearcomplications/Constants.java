@@ -2,7 +2,7 @@ package io.singleton.wearcomplications;
 
 public class Constants {
 
-    static final String BASE_URL = "http://wp.us.davidsingleton.org/";
+    static final String BASE_URL = "http://www.dial.fyi/";
     static final String USER_FRIENDLY_BASE_URL = "dial.fyi/";
 
     static final String REGISTER_PATH = "register_complications";
